@@ -89,8 +89,8 @@ class AnalisisDeRiesgoApp:
 
             # make new intern dic'
             interno = {"Cargo": cargo, "GlsCargo": gls_cargo,
-                    "Unirel": unirel, "GlsUnirel": gls_unirel,
-                    "NombreJefe": nombre_jefe}
+                        "UR": unirel, "GlsUR": gls_unirel,
+                        "NombreJefe": nombre_jefe}
             
             # add to interns dict
             self.internos_dict[rut] = interno
@@ -148,11 +148,11 @@ class AnalisisDeRiesgoApp:
         for cell in ws_a[1]:
             if cell.value != None:
                 analisis_c[cell.value] = cell.column_letter
+                print(f"Adding analisis_c[{cell.value}] = {cell.column_letter}")
 
         for i in range(2, ws_a.max_row+1):
             account_name = ws_a[f"{analisis_c['Nombre de la cuenta']}{i}"].value
             if account_name in self.racf_dict.keys():
-                
                 rut = self.racf_dict[account_name]
                 if rut in self.internos_dict.keys():
                     data = self.internos_dict[rut]
@@ -171,7 +171,7 @@ class AnalisisDeRiesgoApp:
             else:
                 print(f"Account Name {account_name} not found in RACF")
         
-        ws_a.save(self.analisis_path)
+        wb_a.save(self.analisis_path)
 
 if __name__ == "__main__":
     root = tk.Tk()
